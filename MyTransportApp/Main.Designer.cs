@@ -1,6 +1,6 @@
 ﻿namespace MyTransportApp
 {
-  partial class Form1
+  partial class Main
   {
     /// <summary>
     /// Erforderliche Designervariable.
@@ -28,10 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.StartstationsText = new System.Windows.Forms.TextBox();
-      this.EndstationText = new System.Windows.Forms.TextBox();
       this.AbfahrtAnkunftBox = new System.Windows.Forms.ComboBox();
-      this.ZeitBox = new System.Windows.Forms.ComboBox();
       this.DatePicker = new System.Windows.Forms.DateTimePicker();
       this.VerbindungSuchenButton = new System.Windows.Forms.Button();
       this.FahrplanButton = new System.Windows.Forms.Button();
@@ -44,25 +41,16 @@
       this.Abfahrt = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Pfeil = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Ankunft = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.StartstationsText = new System.Windows.Forms.ComboBox();
+      this.EndstationText = new System.Windows.Forms.ComboBox();
+      this.Gridbutton = new System.Windows.Forms.DataGridViewButtonColumn();
+      this.TimePicker = new System.Windows.Forms.DateTimePicker();
       ((System.ComponentModel.ISupportInitialize)(this.VerbindungenGrid)).BeginInit();
       this.SuspendLayout();
       // 
-      // StartstationsText
-      // 
-      this.StartstationsText.Location = new System.Drawing.Point(104, 73);
-      this.StartstationsText.Name = "StartstationsText";
-      this.StartstationsText.Size = new System.Drawing.Size(100, 22);
-      this.StartstationsText.TabIndex = 0;
-      // 
-      // EndstationText
-      // 
-      this.EndstationText.Location = new System.Drawing.Point(265, 72);
-      this.EndstationText.Name = "EndstationText";
-      this.EndstationText.Size = new System.Drawing.Size(100, 22);
-      this.EndstationText.TabIndex = 1;
-      // 
       // AbfahrtAnkunftBox
       // 
+      this.AbfahrtAnkunftBox.Enabled = false;
       this.AbfahrtAnkunftBox.FormattingEnabled = true;
       this.AbfahrtAnkunftBox.Items.AddRange(new object[] {
             "Ankunftszeit",
@@ -71,39 +59,7 @@
       this.AbfahrtAnkunftBox.Name = "AbfahrtAnkunftBox";
       this.AbfahrtAnkunftBox.Size = new System.Drawing.Size(121, 24);
       this.AbfahrtAnkunftBox.TabIndex = 2;
-      // 
-      // ZeitBox
-      // 
-      this.ZeitBox.FormattingEnabled = true;
-      this.ZeitBox.Items.AddRange(new object[] {
-            "00.00",
-            "01.00",
-            "02.00",
-            "03.00",
-            "04.00",
-            "05.00",
-            "06.00",
-            "07.00",
-            "08.00",
-            "09.00",
-            "10.00",
-            "11.00",
-            "12.00",
-            "13.00",
-            "14.00",
-            "15.00",
-            "16.00",
-            "17.00",
-            "18.00",
-            "19.00",
-            "20.00",
-            "21.00",
-            "22.00",
-            "23.00"});
-      this.ZeitBox.Location = new System.Drawing.Point(557, 70);
-      this.ZeitBox.Name = "ZeitBox";
-      this.ZeitBox.Size = new System.Drawing.Size(103, 24);
-      this.ZeitBox.TabIndex = 3;
+      this.AbfahrtAnkunftBox.Text = "Abfahrtszeit";
       // 
       // DatePicker
       // 
@@ -130,6 +86,7 @@
       this.FahrplanButton.TabIndex = 6;
       this.FahrplanButton.Text = "Fahrplan anzeigen";
       this.FahrplanButton.UseVisualStyleBackColor = true;
+      this.FahrplanButton.Click += new System.EventHandler(this.FahrplanButton_Click);
       // 
       // KarteButton
       // 
@@ -139,6 +96,7 @@
       this.KarteButton.TabIndex = 7;
       this.KarteButton.Text = "Karte";
       this.KarteButton.UseVisualStyleBackColor = true;
+      this.KarteButton.Click += new System.EventHandler(this.KarteButton_Click);
       // 
       // Startstationlabel
       // 
@@ -182,7 +140,8 @@
       this.VerbindungenGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Abfahrt,
             this.Pfeil,
-            this.Ankunft});
+            this.Ankunft,
+            this.Gridbutton});
       this.VerbindungenGrid.Location = new System.Drawing.Point(107, 301);
       this.VerbindungenGrid.Name = "VerbindungenGrid";
       this.VerbindungenGrid.RowHeadersWidth = 51;
@@ -211,11 +170,49 @@
       this.Ankunft.Name = "Ankunft";
       this.Ankunft.Width = 125;
       // 
-      // Form1
+      // StartstationsText
+      // 
+      this.StartstationsText.FormattingEnabled = true;
+      this.StartstationsText.Location = new System.Drawing.Point(107, 73);
+      this.StartstationsText.Name = "StartstationsText";
+      this.StartstationsText.Size = new System.Drawing.Size(121, 24);
+      this.StartstationsText.TabIndex = 13;
+      this.StartstationsText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.StartstationsText_KeyUp);
+      // 
+      // EndstationText
+      // 
+      this.EndstationText.FormattingEnabled = true;
+      this.EndstationText.Location = new System.Drawing.Point(268, 75);
+      this.EndstationText.Name = "EndstationText";
+      this.EndstationText.Size = new System.Drawing.Size(121, 24);
+      this.EndstationText.TabIndex = 14;
+      this.EndstationText.KeyUp += new System.Windows.Forms.KeyEventHandler(this.EndstationText_KeyUp);
+      // 
+      // Gridbutton
+      // 
+      this.Gridbutton.HeaderText = "Per Mail versenden";
+      this.Gridbutton.MinimumWidth = 6;
+      this.Gridbutton.Name = "Gridbutton";
+      this.Gridbutton.Width = 125;
+      // 
+      // TimePicker
+      // 
+      this.TimePicker.CustomFormat = "HH:mm";
+      this.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+      this.TimePicker.Location = new System.Drawing.Point(560, 74);
+      this.TimePicker.Name = "TimePicker";
+      this.TimePicker.ShowUpDown = true;
+      this.TimePicker.Size = new System.Drawing.Size(94, 22);
+      this.TimePicker.TabIndex = 15;
+      // 
+      // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(994, 550);
+      this.Controls.Add(this.TimePicker);
+      this.Controls.Add(this.EndstationText);
+      this.Controls.Add(this.StartstationsText);
       this.Controls.Add(this.VerbindungenGrid);
       this.Controls.Add(this.DatumLabel);
       this.Controls.Add(this.ZeitLabel);
@@ -225,11 +222,8 @@
       this.Controls.Add(this.FahrplanButton);
       this.Controls.Add(this.VerbindungSuchenButton);
       this.Controls.Add(this.DatePicker);
-      this.Controls.Add(this.ZeitBox);
       this.Controls.Add(this.AbfahrtAnkunftBox);
-      this.Controls.Add(this.EndstationText);
-      this.Controls.Add(this.StartstationsText);
-      this.Name = "Form1";
+      this.Name = "Main";
       this.Text = "Form1";
       ((System.ComponentModel.ISupportInitialize)(this.VerbindungenGrid)).EndInit();
       this.ResumeLayout(false);
@@ -238,11 +232,7 @@
     }
 
     #endregion
-
-    private System.Windows.Forms.TextBox StartstationsText;
-    private System.Windows.Forms.TextBox EndstationText;
     private System.Windows.Forms.ComboBox AbfahrtAnkunftBox;
-    private System.Windows.Forms.ComboBox ZeitBox;
     private System.Windows.Forms.DateTimePicker DatePicker;
     private System.Windows.Forms.Button VerbindungSuchenButton;
     private System.Windows.Forms.Button FahrplanButton;
@@ -255,6 +245,10 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn Abfahrt;
     private System.Windows.Forms.DataGridViewTextBoxColumn Pfeil;
     private System.Windows.Forms.DataGridViewTextBoxColumn Ankunft;
+    private System.Windows.Forms.ComboBox StartstationsText;
+    private System.Windows.Forms.ComboBox EndstationText;
+    private System.Windows.Forms.DataGridViewButtonColumn Gridbutton;
+    private System.Windows.Forms.DateTimePicker TimePicker;
   }
 }
 
