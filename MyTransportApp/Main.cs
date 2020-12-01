@@ -30,7 +30,7 @@ namespace MyTransportApp
      var Zeitumwandler = CultureInfo.InvariantCulture;
      var datepicker = DateTime.Parse(DatePicker.Value.ToString());
       int isArrivalTime = 0;
-      if (AbfahrtAnkunftBox.SelectedItem.ToString() == "Ankunftszeit")
+      if (AbfahrtAnkunftBox.Text == "Ankunftszeit")
       {
         isArrivalTime = 1;
       }
@@ -58,10 +58,7 @@ namespace MyTransportApp
       if (Abfahrtsplan.StationList.Count != 0)
       {
         abfahrtsplanform.ShowDialog();
-
       }
-
-
     }
 
     private void KarteButton_Click(object sender, EventArgs e)
@@ -100,6 +97,15 @@ namespace MyTransportApp
           EndstationText.Items.Add(station.Name);
         }
       }
+    }
+
+    private void StationaufKarte_Click(object sender, EventArgs e)
+    {
+      var station = _transport.GetStations(StartstationsText.Text);
+      var xCoordinate = station.StationList[0].Coordinate.XCoordinate ;
+      var yCoordinate = station.StationList[0].Coordinate.YCoordinate;
+      StationKartenansicht stationKartenansicht = new StationKartenansicht(yCoordinate, xCoordinate);
+      stationKartenansicht.ShowDialog();
     }
   }
 }

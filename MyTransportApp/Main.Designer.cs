@@ -45,12 +45,13 @@
       this.EndstationText = new System.Windows.Forms.ComboBox();
       this.Gridbutton = new System.Windows.Forms.DataGridViewButtonColumn();
       this.TimePicker = new System.Windows.Forms.DateTimePicker();
+      this.StationaufKarte = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.VerbindungenGrid)).BeginInit();
       this.SuspendLayout();
       // 
       // AbfahrtAnkunftBox
       // 
-      this.AbfahrtAnkunftBox.Enabled = false;
+      this.AbfahrtAnkunftBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.AbfahrtAnkunftBox.FormattingEnabled = true;
       this.AbfahrtAnkunftBox.Items.AddRange(new object[] {
             "Ankunftszeit",
@@ -59,7 +60,6 @@
       this.AbfahrtAnkunftBox.Name = "AbfahrtAnkunftBox";
       this.AbfahrtAnkunftBox.Size = new System.Drawing.Size(121, 24);
       this.AbfahrtAnkunftBox.TabIndex = 2;
-      this.AbfahrtAnkunftBox.Text = "Abfahrtszeit";
       // 
       // DatePicker
       // 
@@ -90,11 +90,11 @@
       // 
       // KarteButton
       // 
-      this.KarteButton.Location = new System.Drawing.Point(757, 166);
+      this.KarteButton.Location = new System.Drawing.Point(677, 166);
       this.KarteButton.Name = "KarteButton";
-      this.KarteButton.Size = new System.Drawing.Size(75, 23);
+      this.KarteButton.Size = new System.Drawing.Size(155, 23);
       this.KarteButton.TabIndex = 7;
-      this.KarteButton.Text = "Karte";
+      this.KarteButton.Text = "Stationen in der nähe";
       this.KarteButton.UseVisualStyleBackColor = true;
       this.KarteButton.Click += new System.EventHandler(this.KarteButton_Click);
       // 
@@ -205,11 +205,22 @@
       this.TimePicker.Size = new System.Drawing.Size(94, 22);
       this.TimePicker.TabIndex = 15;
       // 
+      // StationaufKarte
+      // 
+      this.StationaufKarte.Location = new System.Drawing.Point(107, 104);
+      this.StationaufKarte.Name = "StationaufKarte";
+      this.StationaufKarte.Size = new System.Drawing.Size(141, 27);
+      this.StationaufKarte.TabIndex = 16;
+      this.StationaufKarte.Text = "Auf Karte anzeigen";
+      this.StationaufKarte.UseVisualStyleBackColor = true;
+      this.StationaufKarte.Click += new System.EventHandler(this.StationaufKarte_Click);
+      // 
       // Main
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(994, 550);
+      this.Controls.Add(this.StationaufKarte);
       this.Controls.Add(this.TimePicker);
       this.Controls.Add(this.EndstationText);
       this.Controls.Add(this.StartstationsText);
@@ -249,6 +260,7 @@
     private System.Windows.Forms.ComboBox EndstationText;
     private System.Windows.Forms.DataGridViewButtonColumn Gridbutton;
     private System.Windows.Forms.DateTimePicker TimePicker;
+    private System.Windows.Forms.Button StationaufKarte;
   }
 }
 
