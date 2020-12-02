@@ -30,12 +30,20 @@ namespace MyTransportApp
 
       base.WndProc(ref m);
     }
+    GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+
+    void watcher_StatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
+    {
+
+
+    }
 
     public Main()
     {
       InitializeComponent();
-
-      
+      watcher.Start();
+      watcher.TryStart(false, TimeSpan.FromMilliseconds(100000));
+      watcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(watcher_StatusChanged);
     }
 
     private void VerbindungSuchenButton_Click(object sender, EventArgs e)
@@ -159,20 +167,19 @@ namespace MyTransportApp
 
     private void Stationenindernaehe_Click(object sender, EventArgs e)
     {
+      GeoCoordinate coord = watcher.Position.Location;
 
-        GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
-        watcher.TryStart(false, TimeSpan.FromMilliseconds(10000));
-        GeoCoordinate coord = watcher.Position.Location;
-
-        if (coord.IsUnknown != true)
-        {
+      if (coord.IsUnknown != true)
+      {
         Stationenindernaehe stationnaehe = new Stationenindernaehe(coord, _transport);
         stationnaehe.ShowDialog();
-        }
-        else
-        {
-          MessageBox.Show("Ihre Koordinaten konnten nicht gelesen werden. Stellen sicher, dass Sie GPS an haben und Empfang haben");
-        }
+      }
+      else
+      {
+        MessageBox.Show("Ihre Koordinaten konnten nicht gelesen werden. Stellen sicher, dass Sie GPS an haben und Empfang haben");
+      }
+
+      watcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(watcher_StatusChanged);
     }
 
     private void VerbindungenGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)

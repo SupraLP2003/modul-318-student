@@ -293,7 +293,7 @@
       // pictureBox1
       // 
       this.pictureBox1.Image = global::MyTransportApp.Properties.Resources.SBBLOGO;
-      this.pictureBox1.Location = new System.Drawing.Point(272, 12);
+      this.pictureBox1.Location = new System.Drawing.Point(254, 12);
       this.pictureBox1.Name = "pictureBox1";
       this.pictureBox1.Size = new System.Drawing.Size(220, 48);
       this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
