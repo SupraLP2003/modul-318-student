@@ -13,6 +13,20 @@ namespace MyTransportApp
 {
   public partial class Abfahrtsplanform : Form
   {
+    protected override void WndProc(ref Message m)
+    {
+      switch (m.Msg)
+      {
+        case 0x84:
+          base.WndProc(ref m);
+          if ((int)m.Result == 0x1)
+            m.Result = (IntPtr)0x2;
+          return;
+      }
+
+      base.WndProc(ref m);
+    }
+
     public Abfahrtsplanform(SwissTransport.Stations Abfahrtsplan, ITransport _transport)
     {
       InitializeComponent();
@@ -30,6 +44,11 @@ namespace MyTransportApp
         MessageBox.Show("Bitte Wählen Sie eine Gültige Station aus");
       }
 
+    }
+
+    private void PictureBox1_Click(object sender, EventArgs e)
+    {
+      this.Close();
     }
   }
 }

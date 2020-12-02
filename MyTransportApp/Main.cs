@@ -1,4 +1,5 @@
 ﻿using SwissTransport;
+using System.Device.Location;
 using System;
 using System.Globalization;
 using System.Collections.Generic;
@@ -9,13 +10,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace MyTransportApp
 {
   public partial class Main : Form
   {
    private ITransport _transport = new Transport();
- 
+    protected override void WndProc(ref Message m)
+    {
+      switch (m.Msg)
+      {
+        case 0x84:
+          base.WndProc(ref m);
+          if ((int)m.Result == 0x1)
+            m.Result = (IntPtr)0x2;
+          return;
+      }
+
+      base.WndProc(ref m);
+    }
+
     public Main()
     {
       InitializeComponent();
@@ -77,7 +92,11 @@ namespace MyTransportApp
         {
           StartstationsText.Focus();
           StartstationsText.SelectionStart = StartstationsText.Text.Length;
-          StartstationsText.Items.Add(station.Name);
+          if (station.Name != null)
+          {
+            StartstationsText.Items.Add(station.Name);
+          }
+          
         }
       }
 
@@ -106,6 +125,73 @@ namespace MyTransportApp
       var yCoordinate = station.StationList[0].Coordinate.YCoordinate;
       StationKartenansicht stationKartenansicht = new StationKartenansicht(yCoordinate, xCoordinate);
       stationKartenansicht.ShowDialog();
+    }
+
+    private void PictureBox2_Click(object sender, EventArgs e)
+    {
+      Application.Exit();
+    }
+
+    private void HomeButtonAbfahrtsplan_Click(object sender, EventArgs e)
+    {
+      Abfahrtsplan abfahrtsplan = new Abfahrtsplan();
+      abfahrtsplan.ShowDialog();
+    }
+
+    private void PictureBox5_Click(object sender, EventArgs e)
+    {
+      if (StartstationsText.Text != "")
+      {
+        var station = _transport.GetStations(StartstationsText.Text);
+        var xCoordinate = station.StationList[0].Coordinate.XCoordinate;
+        var yCoordinate = station.StationList[0].Coordinate.YCoordinate;
+        StationKartenansicht stationKartenansicht = new StationKartenansicht(yCoordinate, xCoordinate);
+        stationKartenansicht.ShowDialog();
+
+      }
+
+    }
+
+    private void PictureBox6_Click(object sender, EventArgs e)
+    {
+      MessageBox.Show($"FAQ:{Environment.NewLine}{Environment.NewLine}F: Wie Sehe ich die Station auf der Karte?{Environment.NewLine}A: Sie können auf das Kartensymbol neben der Startstations eingabe klicken.");
+    }
+
+    private void Stationenindernaehe_Click(object sender, EventArgs e)
+    {
+
+        GeoCoordinateWatcher watcher = new GeoCoordinateWatcher();
+        watcher.TryStart(false, TimeSpan.FromMilliseconds(10000));
+        GeoCoordinate coord = watcher.Position.Location;
+
+        if (coord.IsUnknown != true)
+        {
+        Stationenindernaehe stationnaehe = new Stationenindernaehe(coord, _transport);
+        stationnaehe.ShowDialog();
+        }
+        else
+        {
+          MessageBox.Show("Ihre Koordinaten konnten nicht gelesen werden. Stellen sicher, dass Sie GPS an haben und Empfang haben");
+        }
+    }
+
+    private void VerbindungenGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+    {
+      var senderGrid = (DataGridView)sender;
+
+      if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+          e.RowIndex >= 0)
+      {
+        string duration = VerbindungenGrid.Rows[e.RowIndex].Cells["Pfeil"].FormattedValue.ToString();
+        string abfahrt = VerbindungenGrid.Rows[e.RowIndex].Cells["Abfahrt"].FormattedValue.ToString();
+        string Ankunft = VerbindungenGrid.Rows[e.RowIndex].Cells["Ankunft"].FormattedValue.ToString();
+        var body = abfahrt +" "+ duration +" "+ Ankunft ;
+        Process.Start(
+                    "mailto:" + "" +
+                    "?subject=" + "Verbindung Teilen" +
+                    "&body=" + body
+                    );
+      }
     }
   }
 }

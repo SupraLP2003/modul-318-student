@@ -16,6 +16,20 @@ namespace MyTransportApp
 {
   public partial class StationKartenansicht : Form
   {
+    protected override void WndProc(ref Message m)
+    {
+      switch (m.Msg)
+      {
+        case 0x84:
+          base.WndProc(ref m);
+          if ((int)m.Result == 0x1)
+            m.Result = (IntPtr)0x2;
+          return;
+      }
+
+      base.WndProc(ref m);
+    }
+
     public double YCoordinate;
     public double XCoordinate;
     public StationKartenansicht(double yCoordinate, double xCoordinate)
@@ -40,6 +54,11 @@ namespace MyTransportApp
         GMarkerGoogleType.green);
       markersOverlay.Markers.Add(marker);
       gMap.Overlays.Add(markersOverlay);
+    }
+
+    private void PictureBox1_Click(object sender, EventArgs e)
+    {
+      this.Close();
     }
   }
 }

@@ -72,5 +72,25 @@ namespace SwissTransport
             
             return request;
         }
+    public Stations GetCloseStations(string x, string y)
+    {
+      var request = CreateWebRequest("http://transport.opendata.ch/v1/locations?x=" + x + "&y=" + y + "&type=station");
+      var response = request.GetResponse();
+      var responseStream = response.GetResponseStream();
+
+
+
+      if (responseStream != null)
+      {
+        var message = new StreamReader(responseStream).ReadToEnd();
+        var stations = JsonConvert.DeserializeObject<Stations>(message
+            , new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+        return stations;
+      }
+
+
+
+      return null;
     }
+  }
 }

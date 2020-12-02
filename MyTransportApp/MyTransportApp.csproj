@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Device" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,6 +54,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abfahrtsplan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abfahrtsplan.Designer.cs">
+      <DependentUpon>Abfahrtsplan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stationenindernaehe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stationenindernaehe.Designer.cs">
+      <DependentUpon>Stationenindernaehe.cs</DependentUpon>
+    </Compile>
     <Compile Include="StationKartenansicht.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +86,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Abfahrtsplan.resx">
+      <DependentUpon>Abfahrtsplan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stationenindernaehe.resx">
+      <DependentUpon>Stationenindernaehe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StationKartenansicht.resx">
       <DependentUpon>StationKartenansicht.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -110,6 +130,24 @@
       <Project>{d0262178-a48f-4de0-807b-e76b63e39421}</Project>
       <Name>SwissTransport</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SBBLOGO.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\schliessen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nähe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Abfahrtsplan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Karte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1200px-Infobox_info_icon.svg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
